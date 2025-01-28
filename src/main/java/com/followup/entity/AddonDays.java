@@ -1,0 +1,29 @@
+package com.followup.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "addon_days")
+public class AddonDays {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+//    private Integer addonDays;
+    private LocalDate renewalOfAddon;
+    private LocalDate expiryOfAddon;
+    private Double chargesOnAddon;
+
+    @ManyToMany
+    @JoinTable(name = "addon_days_rents",
+            joinColumns = @JoinColumn(name = "addonDays_addonId"),
+            inverseJoinColumns = @JoinColumn(name = "rents_rentId"))
+    private List<Rent> rents = new ArrayList<>();
+}
