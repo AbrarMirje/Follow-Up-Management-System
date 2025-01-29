@@ -12,6 +12,7 @@ import com.followup.repository.IRentRepository;
 import com.followup.service.IRentService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,8 @@ public class RentServiceImpl implements IRentService {
     public RentDto addRent(RentDto rentDto) {
         Rent rent = new Rent();
 
+        Material materialInRent = rent.getMaterial();
+
         rent.setQuantity(rentDto.getQuantity());
 
         Material material = materialRepository.findById(rentDto.getMaterialId())
@@ -52,22 +55,32 @@ public class RentServiceImpl implements IRentService {
             rent.setTotalAmount(totalAmount);
         }
 
-        LocalDate issuedDate = LocalDate.now();
-        rent.setIssuedDate(issuedDate);
 
-        LocalDate renewDate = issuedDate.plusDays(0);
-        rent.setRenewDate(renewDate);
+        LocalDate now = LocalDate.now();
+        rent.setIssuedDate(now);
 
         rent.setIsRentOngoing(true);
 
+
+        rent.setNumberOfDaysToBeIncreased(rentDto.getNumberOfDaysToBeIncreased());
+        System.out.println(rent.getNumberOfDaysToBeIncreased());
+        rent.setRenewDate(now.plusDays(rentDto.getNumberOfDaysToBeIncreased()));
+
         Rent savedRent = rentRepository.save(rent);
 
+
         RentDto responseDto = new RentDto();
+        responseDto.setId(savedRent.getRentId());
         responseDto.setQuantity(savedRent.getQuantity());
         responseDto.setCustomerId(savedRent.getCustomer().getCustomerId());
         responseDto.setMaterialId(savedRent.getMaterial().getMaterialId());
+        responseDto.setIssuedDate(savedRent.getIssuedDate());
+        responseDto.setNumberOfDaysToBeIncreased(savedRent.getNumberOfDaysToBeIncreased());
+        responseDto.setRenewDate(savedRent.getRenewDate());
+
         return responseDto;
     }
+
 
 
     @Override

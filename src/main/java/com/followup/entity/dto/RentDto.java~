@@ -18,7 +18,6 @@ public class RentDto {
     private LocalDate renewDate;
     private Long customerId;
     private Long materialId;
-    private Integer numberOfDaysToBeIncreased;
 }
 
 

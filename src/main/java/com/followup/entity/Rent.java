@@ -23,6 +23,7 @@ public class Rent {
     private Long rentId;
 
     private LocalDate issuedDate;
+    private Integer numberOfDaysToBeIncreased;
     private LocalDate renewDate;
 
     private Double quantity;

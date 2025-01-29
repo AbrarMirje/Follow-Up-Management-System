@@ -22,13 +22,9 @@ public class RentController {
 
     @PostMapping("/add-rent")
     public ResponseEntity<?> saveRent(@Valid @RequestBody RentDto rentDto) {
-        try {
-            RentDto savedRent = rentService.addRent(rentDto);
-            return ResponseEntity.ok(new JsonResponse(true, "Rent added successfully", savedRent));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new JsonResponse(false, "Error adding rent", e.getMessage()));
-        }
+        System.out.println(rentDto.getNumberOfDaysToBeIncreased());
+        RentDto savedRent = rentService.addRent(rentDto);
+        return ResponseEntity.ok(savedRent);
     }
 
 
