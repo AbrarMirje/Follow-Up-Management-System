@@ -20,5 +20,6 @@ public class Customer {
     private String customerName;
     private String siteAddress;
     private LocalDate customerEntryDate;
-
+    private String contact;
+    private String email;
 }

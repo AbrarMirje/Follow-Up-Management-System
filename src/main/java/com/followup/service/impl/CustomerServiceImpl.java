@@ -76,6 +76,18 @@ public class CustomerServiceImpl implements ICustomerService {
             existedCustomer.setCustomerEntryDate(existedCustomer.getCustomerEntryDate());
         }
 
+        if (customer.getContact() != null){
+            existedCustomer.setContact(customer.getContact());
+        } else {
+            existedCustomer.setContact(existedCustomer.getContact());
+        }
+
+        if (customer.getEmail() != null){
+            existedCustomer.setEmail(customer.getEmail());
+        } else {
+            existedCustomer.setEmail(existedCustomer.getEmail());
+        }
+
         customerRepository.save(existedCustomer);
     }
 
